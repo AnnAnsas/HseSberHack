@@ -16,8 +16,6 @@ data_test_with_features = pd.DataFrame(data_test, columns=feature_names_at_fit_t
 
 predictions_proba = loaded_model.predict_proba(data_test_with_features)  # Predict class probabilities
 
-print(predictions_proba[:, 0])
-
 submission = pd.DataFrame(index=data_test.index, data=predictions_proba[:, 1], columns=['probability'])
 
 submission.to_csv('result.csv')

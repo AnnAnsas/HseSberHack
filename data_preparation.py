@@ -38,7 +38,7 @@ def features_creation(x):
     features.append(pd.Series(x['night'].value_counts(normalize=True).add_prefix('night_')))
     features.append(pd.Series(x[x['amount'] > 0]['amount'].agg(['min', 'max', 'mean', 'median', 'std', 'count']) \
                               .add_prefix('positive_transactions_')))
-    features.append(pd.Series(x[x['amount'] < 0]['amount'].agg(['min', 'max', 'mean', 'median', 'std', 'count']) \
+    features.append(pd.Series(x[x['amount'] <= 0]['amount'].agg(['min', 'max', 'mean', 'median', 'std', 'count']) \
                               .add_prefix('negative_transactions_')))
     return pd.concat(features)
 

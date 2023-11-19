@@ -5,8 +5,7 @@ scikit-learn
 seaborn
 matplotlib
 tqdm == 4.39.0
-xgboost
 joblib
 ipywidgets
 spacy
-
+pymorphy3

@@ -1,13 +1,8 @@
 from sklearn.preprocessing import StandardScaler
-from sklearn.model_selection import GridSearchCV
 from sklearn.pipeline import Pipeline
 from catboost import CatBoostClassifier
-from xgboost import XGBClassifier
-from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
-from sklearn.metrics import roc_auc_score
 import pandas as pd
-from data_preparation import data_prep
 import joblib
 
 
