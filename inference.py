@@ -4,7 +4,7 @@ import joblib
 
 
 PATH_DATA = "data"
-MODEL_PATH = "model_2.pkl"
+MODEL_PATH = "model_3.pkl"
 
 data_train, data_test, target = data_prep(PATH_DATA)
 
@@ -12,7 +12,7 @@ loaded_model = joblib.load(MODEL_PATH)
 
 feature_names_at_fit_time = loaded_model.feature_names_in_
 
-data_test_with_features = pd.DataFrame(data_test, columns=feature_names_at_fit_time)
+data_test_with_features = pd.DataFrame(data_test, columns=feature_names_at_fit_time).fillna(0)
 
 predictions_proba = loaded_model.predict_proba(data_test_with_features)  # Predict class probabilities
 

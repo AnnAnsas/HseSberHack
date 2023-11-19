@@ -34,6 +34,7 @@ def cool_features_creation(x):
 def features_creation(x):
     features = []
     features.append(pd.Series(x['day'].value_counts(normalize=True).add_prefix('day_')))
+    features.append(pd.Series(x['month'].value_counts(normalize=True).add_prefix('month_')))
     features.append(pd.Series(x['hour'].value_counts(normalize=True).add_prefix('hour_')))
     features.append(pd.Series(x['night'].value_counts(normalize=True).add_prefix('night_')))
     features.append(pd.Series(x[x['amount'] > 0]['amount'].agg(['min', 'max', 'mean', 'median', 'std', 'count']) \
@@ -68,6 +69,7 @@ def data_prep(PATH_DATA):
 
     for df in [transactions_train, transactions_test]:
         df['day'] = df['trans_time'].str.split().apply(lambda x: int(x[0]) % 7)
+        df['month'] = df['trans_time'].str.split().apply(lambda x: int(x[0]) % 365 % 30)
         df['hour'] = df['trans_time'].apply(lambda x: re.search(' \d*', x).group(0)).astype(int)
         df['night'] = ~df['hour'].between(6, 22).astype(int)
 
@@ -87,10 +89,9 @@ def data_prep(PATH_DATA):
         df.rename(columns={last_column_name: 'text'}, inplace=True)
 
     vectorized_df = text_vectorizer(data_train['text'].values)
-
     data_train = pd.concat([data_train.reset_index(), vectorized_df], axis=1)
-
     data_test = pd.concat([data_test.reset_index(), text_vectorizer(data_test['text'].values)], axis=1)
+
     data_train.set_index('client_id', inplace=True)
     data_test.set_index('client_id', inplace=True)
     target = data_train.join(gender_train, how='inner')['gender']
