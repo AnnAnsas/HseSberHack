@@ -5,7 +5,7 @@ import spacy
 import re
 from sklearn.feature_extraction.text import CountVectorizer
 
-nlp = spacy.load("ru_core_news_sm")
+nlp = spacy.load("ru_core_news_sm/ru_core_news_sm-3.7.0")
 
 
 def text_vectorizer(x):

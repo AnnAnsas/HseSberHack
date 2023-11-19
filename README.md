@@ -36,3 +36,6 @@ param_grid_cbc = {
     'classifier__depth': [6, 7, 9],
     'classifier__l2_leaf_reg': [2, 3, 4]
 }
+
+
+Взять все mcc и через них сгенерировать фиксированное количество фичей 

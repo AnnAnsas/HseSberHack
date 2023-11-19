@@ -7,30 +7,13 @@ from sklearn.ensemble import RandomForestClassifier
 from sklearn.model_selection import train_test_split
 from sklearn.metrics import roc_auc_score
 import pandas as pd
-# from inference import MODEL_PATH, PATH_DATA
 from data_preparation import data_prep
 import joblib
 
-MODEL_PATH = "model_1.pkl"
+
+MODEL_PATH = "model_2.pkl"
 PATH_DATA = "data"
 
-params = {
-    'eta': 0.1,
-    'max_depth': 3,
-    'subsample': 0.8,
-    'colsample_bytree': 0.8,
-
-    'gamma': 0,
-    'lambda': 0,
-    'alpha': 0,
-    'min_child_weight': 0,
-
-    'eval_metric': 'auc',
-    'objective': 'binary:logistic',
-    'booster': 'gbtree',
-    'njobs': -1,
-    'tree_method': 'approx'
-}
 
 data = pd.read_csv('data_train_temp.csv', index_col='client_id')
 data_test = pd.read_csv('data_test_temp.csv', index_col='client_id')
