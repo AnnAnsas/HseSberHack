@@ -2,43 +2,23 @@ import pandas as pd
 import xgboost as xgb
 from data_preparation import data_prep
 import joblib
+from catboost import CatBoostClassifier
 
 PATH_DATA = "data"
-MODEL_PATH = "model_1.pkl"
-
-params = {
-    'eta': 0.1,
-    'max_depth': 3,
-    'subsample': 0.8,
-    'colsample_bytree': 0.8,
-
-    'gamma': 0,
-    'lambda': 0,
-    'alpha': 0,
-    'min_child_weight': 0,
-
-    'eval_metric': 'auc',
-    'objective': 'binary:logistic',
-    'booster': 'gbtree',
-    'njobs': -1,
-    'tree_method': 'approx'
-}
-
-
-
-def predict(loaded_model, train, test):
-    loaded_model = joblib.load(MODEL_PATH)
-    y_pred = loaded_model.predict(xgb.DMatrix(test.values, feature_names=list(train.columns)))
-    submission = pd.DataFrame(index=test.index, data=y_pred, columns=['probability'])
-
-    return submission
-
+MODEL_PATH = "model_2.pkl"
 
 data_train, data_test, target = data_prep(PATH_DATA)
 
 loaded_model = joblib.load(MODEL_PATH)
 
-submission = predict(loaded_model, data_train, data_test)
+feature_names_at_fit_time = loaded_model.get_feature_names_out()
+
+data_test_with_features = pd.DataFrame(data_test, columns=feature_names_at_fit_time)
+
+predictions_proba = loaded_model.predict_proba(data_test_with_features)  # Predict class probabilities
+predictions_class = loaded_model.predict(data_test_with_features)
+
+submission = pd.DataFrame(index=data_test.index, data=predictions_class, columns=['probability'])
 
 submission.to_csv('result.csv')
 

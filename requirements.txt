@@ -8,3 +8,6 @@ tqdm == 4.39.0
 xgboost
 joblib
 ipywidgets
+spacy
+ru-core-news-sm==3.7.0
+
